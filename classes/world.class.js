@@ -5,6 +5,7 @@ class World {
   canvas;
   keyboard;
   camera_x = 0;
+  statusBar = new StatusBar();
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -22,8 +23,8 @@ class World {
     setInterval(() => {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
-          this.character.hit()
-          console.log("Collision with Character, enemy", this.character.energy);
+          this.character.hit();
+          this.statusBar.setPercentage(this.character.energy);
         }
       });
     }, 200);
@@ -32,8 +33,13 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObjects);
-    this.addToMap(this.character);
 
+    this.ctx.translate(-this.camera_x, 0); //Back
+    //Space for fixed object
+    this.addToMap(this.statusBar);
+    this.ctx.translate(this.camera_x, 0); // Forwards
+    
+    this.addToMap(this.character);
     this.addObjectsToMap(this.level.clouds);
 
     this.addObjectsToMap(this.level.enemies);
@@ -74,13 +80,3 @@ class World {
     mo.x = mo.x * -1;
   }
 }
-
-// for (let i = 0; i < this.enemies.length; i++) {
-//   this.ctx.drawImage(
-//     this.enemies[i].img,
-//     this.enemies[i].x,
-//     this.enemies[i].y,
-//     this.enemies[i].width,
-//     this.enemies[i].height
-//   );
-// }
