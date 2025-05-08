@@ -16,10 +16,13 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    return this.y < 180;
+    if (this instanceof ThrowableObject) { //Throwable object should always fall
+      return true;
+    } else {
+      return this.y < 180;
+    }
   }
 
- 
   // character.isCollifing(chicken);
   isColliding(mo) {
     return this.x + this.width > mo.x && this.y + this.height > mo.y && this.x < mo.x && this.y < mo.y + mo.height;
@@ -41,7 +44,7 @@ class MovableObject extends DrawableObject {
   }
 
   isDead() {
-    return this.energy === 0;
+    return this.energy == 0;
   }
 
   playAnimation(images) {

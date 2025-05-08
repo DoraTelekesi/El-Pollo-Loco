@@ -8,7 +8,6 @@ function init() {
 }
 
 window.addEventListener("keydown", (e) => {
- 
   if (e.keyCode == 39) {
     keyboard.RIGHT = true;
   }
@@ -22,7 +21,10 @@ window.addEventListener("keydown", (e) => {
     keyboard.DOWN = true;
   }
   if (e.keyCode == 32) {
-    keyboard.SPACE = true; 
+    keyboard.SPACE = true;
+  }
+  if (e.keyCode == 68) {
+    keyboard.D = true;
   }
 });
 
@@ -41,5 +43,8 @@ window.addEventListener("keyup", (e) => {
   }
   if (e.keyCode == 42) {
     keyboard.SPACE = false;
+  }
+  if (e.keyCode == 68) {
+    keyboard.D = false;
   }
 });
