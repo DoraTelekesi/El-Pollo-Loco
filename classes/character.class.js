@@ -95,12 +95,4 @@ class Character extends MovableObject {
       }
     }, 60);
   }
-
-  // playAnimation(images) {
-  //   let i = this.currentImage % this.IMAGES_WALKING.length; // let i = 6 % 6; 1, Rest 0 = >
-  //   // i = 0, 1, 2, 3, 4, 5, 0
-  //   let path = images[i];
-  //   this.img = this.imageCache[path];
-  //   this.currentImage++;
-  // }
 }

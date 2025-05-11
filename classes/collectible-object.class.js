@@ -21,7 +21,7 @@ class CollectibleObject extends DrawableObject {
   };
     } else if (type === "coins") {
       this.loadImage("img/8_coin/coin_1.png");
-            this.offset = {
+      this.offset = {
     top: 20,
     left: 25,
     right: 50,
@@ -30,6 +30,6 @@ class CollectibleObject extends DrawableObject {
     }
     this.y = y;
     this.type = type;
-    this.x = 200 + Math.random() * 1700;
+    this.x = 200 + Math.random() * 3000;
   }
 }

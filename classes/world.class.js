@@ -16,6 +16,7 @@ class World {
     this.run();
   }
   amountBottle = 0;
+  amountCoin = 0;
 
   setWorld() {
     this.character.world = this;
@@ -35,7 +36,7 @@ class World {
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
         this.throwableObject.push(bottle);
         this.amountBottle--;
-        this.level.statusBar[1].setPercentage((this.amountBottle * 100) / 5, "bottles");
+        this.level.statusBar[1].setPercentage((this.amountBottle * 100) / 10, "bottles");
       } else {
         console.log("no bottles to throw");
       }
@@ -44,8 +45,14 @@ class World {
   checkCollisionWithItem() {
     this.level.collectibleObjects = this.level.collectibleObjects.filter((item) => {
       if (this.character.isCollidingWithItem(item)) {
-        this.amountBottle++;
-        this.level.statusBar[1].setPercentage((this.amountBottle * 100) / 5, "bottles");
+        if (item.type == "bottles") {
+          this.amountBottle++;
+          this.level.statusBar[1].setPercentage((this.amountBottle * 100) / 10, "bottles");
+        } else if (item.type == "coins") {
+          this.amountCoin++;
+          this.level.statusBar[2].setPercentage((this.amountCoin * 100) / 10, "coins");
+        }
+
         return false; // Remove the item from the array
       }
       return true; // Keep the item in the array
@@ -60,15 +67,19 @@ class World {
     });
   }
 
-    checkCollisionsItemsWithEnemy() {
+  checkCollisionsItemsWithEnemy() {
     this.level.enemies.forEach((enemy) => {
       this.throwableObject.forEach((item) => {
         if (enemy.isColliding(item)) {
           enemy.hit();
           item.broken = true;
-
-          this.removeItem(enemy);
-          this.removeEnemy(item);
+          if (enemy instanceof Endboss) {
+            this.level.statusBarEndboss[0].setPercentage((enemy.energy * 100) / 20);
+            this.removeItem(enemy);
+          } else {
+            this.removeItem(enemy);
+            this.removeEnemy(item);
+          }
         }
       });
     });
@@ -96,7 +107,6 @@ class World {
     }, 200);
   }
 
-
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
@@ -110,6 +120,7 @@ class World {
     this.addToMap(this.character);
 
     this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.statusBarEndboss);
     this.addObjectsToMap(this.throwableObject);
     this.addObjectsToMap(this.level.collectibleObjects);
     this.ctx.translate(-this.camera_x, 0);
