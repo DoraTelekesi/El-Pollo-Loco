@@ -1,6 +1,5 @@
 class StatusBar extends DrawableObject {
-
-  IMAGES = [
+  IMAGES_HEALTH = [
     "img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/blue/40.png",
@@ -8,23 +7,67 @@ class StatusBar extends DrawableObject {
     "img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png", //5th image
   ];
-  percentage = 100;
 
-  constructor() {
+  IMAGES_BOTTLES = [
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
+  ];
+
+  IMAGES_COINS = [
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/20.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/40.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/60.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/80.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png",
+  ];
+  percentage;
+
+  constructor(x, y, type) {
     super();
-    this.loadImages(this.IMAGES);
-    this.y=20;
-    this.x=20;
+    this.type = type;
+    this.loadImages(this.IMAGES_HEALTH);
+    this.loadImages(this.IMAGES_BOTTLES);
+    this.loadImages(this.IMAGES_COINS);
+    this.y = y;
+    this.x = x;
     this.width = 200;
     this.height = 60;
-    this.setPercentage(100);
 
+    if (type === "health") {
+      this.setPercentage(100, type);
+    } else if (type === "bottles") {
+      this.setPercentage(0, type);
+    } else if (type === "coins") {
+      this.setPercentage(0, type);
+    }
+
+    // this.setPercentage(100);
   }
   //setPercentage(50)
-  setPercentage(percentage) {
-    this.percentage = percentage; // => 0...5
-    let path = this.IMAGES[this.resolveImageIndex()];
-    this.img = this.imageCache[path];
+  setPercentage(percentage, type) {
+    let images;
+    this.percentage = percentage;
+    // => 0...5
+    if (type === "health") {
+      images = this.IMAGES_HEALTH;
+      let path = images[this.resolveImageIndex()];
+      this.img = this.imageCache[path];
+    }
+    if (type === "bottles") {
+      images = this.IMAGES_BOTTLES;
+      let path = images[this.resolveImageIndex()];
+      this.img = this.imageCache[path];
+    }
+    if (type === "coins") {
+      images = this.IMAGES_COINS;
+      let path = images[this.resolveImageIndex()];
+      this.img = this.imageCache[path];
+    }
   }
   resolveImageIndex() {
     if (this.percentage == 100) {
@@ -41,6 +84,4 @@ class StatusBar extends DrawableObject {
       return 0;
     }
   }
-
-
 }

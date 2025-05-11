@@ -5,10 +5,11 @@ class MovableObject extends DrawableObject {
   acceleration = 2.5;
   energy = 100;
   lastHit = 0;
+  broken = false;
 
   applyGravity() {
     setInterval(() => {
-      if (this.isAboveGround() || this.speedY > 0) {
+      if (!this.broken && (this.isAboveGround() || this.speedY > 0)) {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
@@ -16,16 +17,28 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    if (this instanceof ThrowableObject) { //Throwable object should always fall
+    if (this instanceof ThrowableObject) {
+      //Throwable object should always fall
       return true;
     } else {
       return this.y < 180;
     }
   }
 
-  // character.isCollifing(chicken);
+  // character.isColliding(chicken);
   isColliding(mo) {
-    return this.x + this.width > mo.x && this.y + this.height > mo.y && this.x < mo.x && this.y < mo.y + mo.height;
+    return (
+      this.x + this.width > mo.x && this.y + this.height > mo.y && this.x < mo.x + mo.width && this.y < mo.y + mo.height
+    );
+  }
+
+  isCollidingWithItem(mo) {
+    return (
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+    );
   }
 
   hit() {
@@ -53,14 +66,22 @@ class MovableObject extends DrawableObject {
     let path = images[i];
     this.img = this.imageCache[path];
     this.currentImage++;
+    if (images.length == 1) {
+      let path = images[0];
+      this.img = this.imageCache[path];
+    }
   }
 
   moveRight() {
-    this.x += this.speed;
+    if (!this.broken) {
+      this.x += this.speed;
+    }
   }
 
   moveLeft() {
-    this.x -= this.speed;
+    if (!this.broken) {
+      this.x -= this.speed;
+    }
   }
   jump() {
     this.speedY = 30;

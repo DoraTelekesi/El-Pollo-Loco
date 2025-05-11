@@ -20,5 +20,18 @@ const level1 = new Level(
     new BackgroundObject("img/5_background/layers/3_third_layer/1.png", 739 * 2),
     new BackgroundObject("img/5_background/layers/2_second_layer/1.png", 739 * 2),
     new BackgroundObject("img/5_background/layers/1_first_layer/1.png", 739 * 2),
-  ]
+  ],
+  [
+    new CollectibleObject(330, "bottles"),
+    new CollectibleObject(330, "bottles"),
+    new CollectibleObject(330, "bottles"),
+    new CollectibleObject(330, "bottles"),
+    new CollectibleObject(330, "bottles"),
+    new CollectibleObject(200, "coins"),
+    new CollectibleObject(200, "coins"),
+    new CollectibleObject(200, "coins"),
+    new CollectibleObject(200, "coins"),
+    new CollectibleObject(200, "coins"),
+  ],
+  [new StatusBar(20, 20, "health"), new StatusBar(20, 70, "bottles"), new StatusBar(20, 120, "coins")]
 );

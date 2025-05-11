@@ -4,6 +4,7 @@ class Character extends MovableObject {
   speed = 10;
   height = 250;
   width = 100;
+  broken = false;
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
     "img/2_character_pepe/2_walk/W-22.png",
@@ -39,6 +40,12 @@ class Character extends MovableObject {
     "img/2_character_pepe/4_hurt/H-43.png",
   ];
   world;
+  offset = {
+    top: 70,
+    left: 25,
+    right: 50,
+    bottom: 80,
+  };
 
   constructor() {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
@@ -47,9 +54,14 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
 
+    // this.collectItem();
     this.animate();
     this.applyGravity();
   }
+
+  // collectItem(){
+  //   if(this)
+  // }
   animate() {
     setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -67,7 +79,7 @@ class Character extends MovableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      if(this.isHurt()){
+      if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       }
       if (this.isDead()) {
