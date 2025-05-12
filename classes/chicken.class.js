@@ -4,18 +4,32 @@ class Chicken extends MovableObject {
   width = 80;
   energy = 5;
   broken = false;
-  IMAGES_WALKING = [
+  imageCache = {};
+  IMAGES_WALKING_CHICKEN_1 = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
 
-  IMAGE_DEAD = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
-  constructor() {
-    super().loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
-    this.loadImages(this.IMAGES_WALKING);
-    this.loadImages(this.IMAGE_DEAD);
-    this.x = 1000 + Math.random() * 500;
+  IMAGES_WALKING_CHICKEN_2 = [
+    "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
+    "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
+    "img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
+  ];
+
+  IMAGE_DEAD_CHICKEN_1 = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
+  IMAGE_DEAD_CHICKEN_2 = ["img/3_enemies_chicken/chicken_small/2_dead/dead.png"];
+
+  type = "";
+  constructor(imagePath, type) {
+    super().loadImage(imagePath);
+    this.type = type;
+    this.loadImages(this.IMAGES_WALKING_CHICKEN_1);
+    this.loadImages(this.IMAGES_WALKING_CHICKEN_2);
+    this.loadImages(this.IMAGE_DEAD_CHICKEN_1);
+    this.loadImages(this.IMAGE_DEAD_CHICKEN_2);
+
+    this.x = 700 + Math.random() * 3000;
     this.speed = 0.15 + Math.random() * 0.5;
     this.animate();
   }
@@ -28,10 +42,22 @@ class Chicken extends MovableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.isDead()) {
-        this.playAnimation(this.IMAGE_DEAD);
-      } else {
-        this.playAnimation(this.IMAGES_WALKING);
+      let images;
+      if (this.type === "chicken-1") {
+        if (this.isDead()) {
+          images = this.IMAGE_DEAD_CHICKEN_1;
+        } else {
+          images = this.IMAGES_WALKING_CHICKEN_1;
+        }
+      } else if (this.type === "chicken-2") {
+        if (this.isDead()) {
+          images = this.IMAGE_DEAD_CHICKEN_2;
+        } else {
+          images = this.IMAGES_WALKING_CHICKEN_2;
+        }
+      }
+      if (images) {
+        this.playAnimation(images);
       }
     }, 100);
   }

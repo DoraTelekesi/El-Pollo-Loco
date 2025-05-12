@@ -1,8 +1,21 @@
 body {
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-image: url("./img/5_background/cactus.jpg");
+  background-size: cover;
+  font-family: "Rye", sans-serif;
 }
 canvas {
   background-color: black;
+}
+
+@font-face {
+  font-family: "Rye";
+  src: url(./fonts/Rye/Rye-Regular.ttf);
+}
+
+h1{
+  font-size:40px;
 }

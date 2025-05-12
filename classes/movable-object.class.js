@@ -28,7 +28,24 @@ class MovableObject extends DrawableObject {
   // character.isColliding(chicken);
   isColliding(mo) {
     return (
-      this.x + this.width > mo.x && this.y + this.height > mo.y && this.x < mo.x + mo.width && this.y < mo.y + mo.height
+      this.x + this.width > mo.x && this.x < mo.x + mo.width && this.y + this.height > mo.y && this.y < mo.y + mo.height
+    );
+  }
+  isCollidingFromAbove(mo) {
+    const characterBottom = this.y + this.height;
+    const previousBottom = this.y + this.height - this.speedY;
+    const enemyTop = mo.y;
+    // const enemyBottom = mo.y + mo.height;
+    const characterRight = this.x + this.width;
+    const characterLeft = this.x;
+
+    const horizontalOverlap = characterRight > mo.x && characterLeft < mo.x + mo.width;
+
+    return (
+      this.speedY > 0 && // falling
+      previousBottom <= enemyTop && // character was above enemy
+      characterBottom >= enemyTop && // now touching or passed into enemy
+      horizontalOverlap // x-axis overlap must also happen
     );
   }
 

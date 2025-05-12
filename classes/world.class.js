@@ -28,7 +28,11 @@ class World {
       this.checkThrowObject();
       this.checkCollisionWithItem();
       this.checkCollisionsItemsWithEnemy();
-    }, 200);
+    }, 300);
+
+    setInterval(() => {
+      this.checkCollisionFromAbove();
+    }, 1000 / 30);
   }
   checkThrowObject() {
     if (this.keyboard.D) {
@@ -61,8 +65,22 @@ class World {
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        this.character.hit();
+        this.character.hit(); // Character gets hurt
         this.level.statusBar[0].setPercentage(this.character.energy, "health");
+        console.log("character hurt by chicken");
+      }
+    });
+  }
+
+  checkCollisionFromAbove() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy)) {
+        if (this.character.isCollidingFromAbove(enemy)) {
+          enemy.hit();
+          this.removeEnemy(enemy);
+          this.character.speedY = 10; // Make character bounce up
+          console.log("jumped on chicken");
+        }
       }
     });
   }

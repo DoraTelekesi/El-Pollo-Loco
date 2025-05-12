@@ -1,5 +1,14 @@
 const level1 = new Level(
-  [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
+  [
+    new Chicken("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png", "chicken-1"),
+    new Chicken("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png", "chicken-1"),
+    new Chicken("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png", "chicken-1"),
+    new Chicken("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png", "chicken-1"),
+    new Chicken("img/3_enemies_chicken/chicken_small/1_walk/1_w.png", "chicken-2"),
+    new Chicken("img/3_enemies_chicken/chicken_small/1_walk/1_w.png", "chicken-2"),
+    new Chicken("img/3_enemies_chicken/chicken_small/1_walk/1_w.png", "chicken-2"),
+    new Endboss(),
+  ],
   [new Cloud()],
   [
     new BackgroundObject("img/5_background/layers/air.png", -739),
