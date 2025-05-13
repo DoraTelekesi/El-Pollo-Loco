@@ -9,6 +9,7 @@ body {
 }
 canvas {
   background-color: black;
+  position: relative;
 }
 
 @font-face {
@@ -16,6 +17,180 @@ canvas {
   src: url(./fonts/Rye/Rye-Regular.ttf);
 }
 
-h1{
-  font-size:40px;
+h1 {
+  font-size: 40px;
+}
+.canvas-container {
+  position: relative; /* Ensure this is the positioned ancestor */
+  display: inline-block; /* Optional: Adjust based on layout */
+}
+
+.opening-modal {
+  background-image: url("./img/9_intro_outro_screens/start/startscreen_1.png");
+  background-size: cover;
+  height: 400px;
+  width: 700px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 4;
+  gap: 30px;
+}
+.overlay {
+  height: 100%;
+  width: 100%;
+}
+
+.modal-header {
+  display: flex;
+  gap: 30px;
+}
+.modal-footer {
+  display: flex;
+}
+.start-btn,
+.how-to-play-btn,
+.impressum {
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 10px;
+  font-size: 25px;
+  background-color: rgba(0, 0, 0, 0.253);
+}
+.start-btn:hover,
+.how-to-play-btn:hover {
+  cursor: pointer;
+}
+
+.dp-none {
+  display: none;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.375);
+}
+
+.instructions {
+  background-color: rgb(101, 188, 215);
+  height: 200px;
+  width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 25px;
+  padding: 20px;
+}
+
+.key {
+  width: 25px;
+  height: 25px;
+}
+
+.walk,
+.throw,
+.jump {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.left {
+  transform: rotate(180deg);
+}
+.up {
+  transform: rotate(270deg);
+}
+
+.keyD {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 7px;
+  border: 1px solid black;
+}
+
+.quit-inst {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.quit-inst:hover {
+  cursor: pointer;
+}
+
+.impressum:hover {
+  cursor: pointer;
+}
+.impressum-modal {
+  background-color: rgb(101, 188, 215);
+  height: 400px;
+  width: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.quit-imp {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.quit-imp:hover {
+  cursor: pointer;
+}
+.canvas-icons {
+  display: flex;
+  gap: 20px;
+  position: absolute;
+  top: 430px; /* Adjust as needed */
+  z-index: 9;
+  right: 40px; /* Adjust as needed */
+}
+
+.icons {
+  width: 30px;
+  height: 30px;
+}
+
+.icons:hover {
+  cursor: pointer;
+  transform: scale(1.2);
 }

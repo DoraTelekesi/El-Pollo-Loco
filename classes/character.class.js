@@ -74,6 +74,7 @@ class Character extends MovableObject {
       }
       if (this.world.keyboard.UP && !this.isAboveGround()) {
         this.jump();
+        AUDIO_JUMP.play();
       }
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
@@ -81,6 +82,7 @@ class Character extends MovableObject {
     setInterval(() => {
       if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
+        AUDIO_HURT.play();
       }
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);

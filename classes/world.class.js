@@ -22,6 +22,12 @@ class World {
     this.character.world = this;
   }
 
+  setBackStatusbar() {
+    this.level.statusbar[0].setPercentage(100, "health");
+    this.level.statusbar[1].setPercentage(0, "bottles");
+    this.level.statusbar[2].setPercentage(0, "coins");
+  }
+
   run() {
     setInterval(() => {
       this.checkCollisions();
@@ -29,10 +35,16 @@ class World {
       this.checkCollisionWithItem();
       this.checkCollisionsItemsWithEnemy();
     }, 300);
-
+    setInterval(() => {
+      this.checkThrowObject();
+    }, 100);
+    setInterval(() => {
+      this.checkCollisionWithItem();
+      this.checkThrowObject();
+    }, 1000 / 60);
     setInterval(() => {
       this.checkCollisionFromAbove();
-    }, 1000 / 30);
+    }, 1000 / 60);
   }
   checkThrowObject() {
     if (this.keyboard.D) {
@@ -52,9 +64,11 @@ class World {
         if (item.type == "bottles") {
           this.amountBottle++;
           this.level.statusBar[1].setPercentage((this.amountBottle * 100) / 10, "bottles");
+          AUDIO_COLLECT_BOTTLE.play();
         } else if (item.type == "coins") {
           this.amountCoin++;
           this.level.statusBar[2].setPercentage((this.amountCoin * 100) / 10, "coins");
+          AUDIO_COLLECT_COIN.play();
         }
 
         return false; // Remove the item from the array
@@ -91,6 +105,7 @@ class World {
         if (enemy.isColliding(item)) {
           enemy.hit();
           item.broken = true;
+          AUDIO_SMASH_BOTTLE.play();
           if (enemy instanceof Endboss) {
             this.level.statusBarEndboss[0].setPercentage((enemy.energy * 100) / 20);
             this.removeItem(enemy);

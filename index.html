@@ -5,10 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" href="img/4_enemie_boss_chicken/1_walk/G1.png" type="image/x-icon" />
   </head>
   <body onload="init()">
     <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="729px" height="480px"></canvas>
+    <div class="overlay" onclick="closeInstructions();closeImpressum()" id="overlay"></div>
+
+    <div class="impressum-modal hidden" id="impressum-modal">
+      <img class="quit-imp" onclick="closeImpressum()" src="./img/icons/xmark-solid.svg" alt="quit-instructions" />
+      <p>Dora Telekesi</p>
+      <p>Hofstraße 15</p>
+      <p>48167 Münster</p>
+      <p>015128754578</p>
+      <p>
+        Music by
+        <a
+          href="https://pixabay.com/users/mfcc-28627740/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=290633"
+          >Mykola Sosin</a
+        >
+        from
+        <a
+          href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=290633"
+          >Pixabay</a
+        ><br />
+        <a href="https://www.flaticon.com/free-icons/replay" title="replay icons"
+          >Replay icons created by nawicon - Flaticon</a
+        >
+      </p>
+    </div>
+    <div class="instructions hidden" id="instructions">
+      <img class="quit-inst" onclick="closeInstructions()" src="./img/icons/xmark-solid.svg" alt="quit-instructions" />
+      <div class="walk">
+        <img class="left key" src="./img/icons/play-solid.svg" alt="left" />
+        <img class="right key" src="./img/icons/play-solid.svg" alt="right" />
+        <p>Walk</p>
+      </div>
+      <div class="jump">
+        <img class="up key" src="./img/icons/play-solid.svg" alt="up" />
+        <p>Jump</p>
+      </div>
+      <div class="throw">
+        <p class="keyD">D</p>
+        <p>Throw Bottle</p>
+      </div>
+    </div>
+    <div class="opening-modal" id="opening-modal">
+      <div class="modal-header">
+        <div onclick="startGame()" class="start-btn">START</div>
+        <div class="how-to-play-btn" onclick="openInstructions()">HOW TO PLAY</div>
+      </div>
+      <div class="modal-footer">
+        <div class="impressum" onclick="openImpressum()">IMPRESSUM</div>
+      </div>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="canvas" width="729px" height="480px"> </canvas>
+      <div class="canvas-icons" id="canvas-icons">
+        <img class="icons" onclick="restartGame()" src="./img/icons/replay.png" alt="replay game" />
+        <img
+          class="icons music-on"
+          id="music-on"
+          onclick="toggleMusic()"
+          src="img/icons/volume-high-solid.svg"
+          alt="music on-off"
+        />
+
+        <img class="icons" onclick="goFullScreen()" src="./img/icons/expand-solid.svg" alt="fullscreen mode on-off" />
+      </div>
+    </div>
 
     <script src="classes/drawable-object.class.js"></script>
     <script src="classes/movable-object.class.js"></script>
