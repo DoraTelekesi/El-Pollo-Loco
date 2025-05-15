@@ -10,7 +10,6 @@ class StatusBarEndboss extends MovableObject {
   ];
   percentage;
 
-
   constructor() {
     super();
 
@@ -21,6 +20,13 @@ class StatusBarEndboss extends MovableObject {
     this.width = 200;
     this.height = 60;
     this.setPercentage(100);
+    this.speed = 0.5;
+    this.animate();
+  }
+  animate() {
+    setInterval(() => {
+      this.moveLeft();
+    }, 1000 / 25);
   }
   //setPercentage(50)
   setPercentage(percentage) {

@@ -29,8 +29,8 @@ class Chicken extends MovableObject {
     this.loadImages(this.IMAGE_DEAD_CHICKEN_1);
     this.loadImages(this.IMAGE_DEAD_CHICKEN_2);
 
-    this.x = 700 + Math.random() * 3000;
-    this.speed = 0.15 + Math.random() * 0.5;
+    this.x = 500 + Math.random() * 2800;
+    this.speed = 0.5 + Math.random() * 0.5;
     this.animate();
   }
 
@@ -38,6 +38,7 @@ class Chicken extends MovableObject {
     setInterval(() => {
       if (!this.isDead()) {
         this.moveLeft();
+        // console.log(this.y)
       }
     }, 1000 / 60);
 

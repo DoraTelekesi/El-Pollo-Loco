@@ -33,13 +33,13 @@ class ThrowableObject extends MovableObject {
     // Move the bottle horizontally
     const horizontalMovement = setInterval(() => {
       if (!this.broken) {
-        this.x += 5; // Move to the right
+        this.x += 5; 
       } else {
-        clearInterval(horizontalMovement); // Stop horizontal movement when broken
+        clearInterval(horizontalMovement); 
       }
     }, 25);
 
-    // Play the appropriate animation
+
     setInterval(() => {
       if (this.broken) {
         this.playAnimation(this.SPLASHING_BOTTLES);

@@ -45,16 +45,26 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
     this.x = 3500;
+    this.speed = 0.5;
     this.animate();
   }
 
   animate() {
     setInterval(() => {
-      if (this.isHurt()) {
-        this.playAnimation(this.IMAGES_HURT);
-      }
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
+        if (!this.gameWon) {
+          this.gameWon = true;
+          setTimeout(() => {
+            document.getElementById("win-modal").classList.remove("hidden");
+            document.getElementById("overlay").classList.remove("hidden");
+            AUDIO_BACKGROUND.pause();
+            AUDIO_WIN.play();
+          }, 1000);
+        }
+      } else if (this.isHurt()) {
+        this.playAnimation(this.IMAGES_HURT);
+        AUDIO_BOSS.play();
       }
     }, 160);
 
@@ -64,5 +74,8 @@ class Endboss extends MovableObject {
         this.moveLeft();
       }
     }, 200);
+    setInterval(() => {
+      this.moveLeft();
+    }, 1000 / 25);
   }
 }

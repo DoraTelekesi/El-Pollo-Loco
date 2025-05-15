@@ -7,6 +7,7 @@ class World {
   keyboard;
   camera_x = 0;
   throwableObject = [];
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -14,21 +15,23 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
+    this.endboss = new Endboss();
+    this.endboss.world = this;
   }
   amountBottle = 0;
   amountCoin = 0;
+  gameWon = false;
 
   setWorld() {
     this.character.world = this;
   }
 
-  setBackStatusbar() {
-    this.level.statusbar[0].setPercentage(100, "health");
-    this.level.statusbar[1].setPercentage(0, "bottles");
-    this.level.statusbar[2].setPercentage(0, "coins");
-  }
 
   run() {
+    setInterval(() => {
+      this.checkCollisionWithItem();
+      this.checkCollisionFromAbove();
+    }, 1000 / 25);
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObject();
@@ -37,19 +40,14 @@ class World {
     }, 300);
     setInterval(() => {
       this.checkThrowObject();
-    }, 100);
-    setInterval(() => {
-      this.checkCollisionWithItem();
-      this.checkThrowObject();
-    }, 1000 / 60);
-    setInterval(() => {
-      this.checkCollisionFromAbove();
-    }, 1000 / 60);
+    }, 200);
   }
+
   checkThrowObject() {
     if (this.keyboard.D) {
       if (this.amountBottle > 0) {
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        AUDIO_WHOOSH.play();
         this.throwableObject.push(bottle);
         this.amountBottle--;
         this.level.statusBar[1].setPercentage((this.amountBottle * 100) / 10, "bottles");
@@ -58,6 +56,7 @@ class World {
       }
     }
   }
+
   checkCollisionWithItem() {
     this.level.collectibleObjects = this.level.collectibleObjects.filter((item) => {
       if (this.character.isCollidingWithItem(item)) {
@@ -70,31 +69,28 @@ class World {
           this.level.statusBar[2].setPercentage((this.amountCoin * 100) / 10, "coins");
           AUDIO_COLLECT_COIN.play();
         }
-
         return false; // Remove the item from the array
       }
       return true; // Keep the item in the array
     });
   }
+
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.character.hit(); // Character gets hurt
+      if (this.character.isColliding(enemy) && !enemy.isDead()) {
+        this.character.hit();
         this.level.statusBar[0].setPercentage(this.character.energy, "health");
-        console.log("character hurt by chicken");
       }
     });
   }
 
   checkCollisionFromAbove() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        if (this.character.isCollidingFromAbove(enemy)) {
-          enemy.hit();
-          this.removeEnemy(enemy);
-          this.character.speedY = 10; // Make character bounce up
-          console.log("jumped on chicken");
-        }
+      if (this.character.isCollidingFromAbove(enemy) && this.character.isAboveGround()) {
+        enemy.hit();
+        this.character.bounce();
+        AUDIO_SPLAT.play();
+        this.removeEnemy(enemy);
       }
     });
   }
@@ -175,8 +171,8 @@ class World {
       this.flipImage(mo);
     }
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
-    mo.drawFrameOffset(this.ctx);
+    // mo.drawFrame(this.ctx);
+    // mo.drawFrameOffset(this.ctx);
 
     if (mo.otherDirection) {
       this.flipimageBack(mo);

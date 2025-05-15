@@ -39,7 +39,7 @@ class CollectibleObject extends MovableObject {
     }
     this.y = y;
     this.type = type;
-    this.x = 200 + Math.random() * 3000;
+    this.x = 200 + Math.random() * 2700;
     this.animate();
   }
 

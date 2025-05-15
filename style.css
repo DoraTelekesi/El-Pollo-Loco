@@ -83,6 +83,7 @@ h1 {
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.375);
+  z-index: 999;
 }
 
 .instructions {
@@ -193,4 +194,58 @@ h1 {
 .icons:hover {
   cursor: pointer;
   transform: scale(1.2);
+}
+
+.fail-modal {
+  background-image: url("img/You won, you lost/You lost.png");
+  background-size: 700px 400px;
+  height: 400px;
+  width: 700px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+
+.win-modal {
+  background-image: url("img/You won, you lost/You won A.png");
+  background-size: 700px 400px;
+  height: 400px;
+  width: 700px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.restart-game {
+  width: 45px;
+  height: 45px;
+}
+
+.lost-replay,
+.win-replay {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-size: 25px;
+  border-radius: 10px;
+  border: 1px solid black;
+  /* padding: 10px; */
+  font-size: 25px;
+  background-color: rgba(204, 187, 187, 0.486);
+  width: 245px;
+  height: 70px;
+  top: 320px;
+  right: 200px;
+}
+
+.lost-replay:hover,
+.win-replay:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }

@@ -9,9 +9,14 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
     setInterval(() => {
-      if (!this.broken && (this.isAboveGround() || this.speedY > 0)) {
-        this.y -= this.speedY;
-        this.speedY -= this.acceleration;
+      if (!this.broken) {
+        if (this.isAboveGround() || this.speedY > 0) {
+          this.y -= this.speedY;
+          this.speedY -= this.acceleration;
+        } else {
+          this.y = 180;
+          this.speedY = 0;
+        }
       }
     }, 1000 / 25);
   }
@@ -24,29 +29,27 @@ class MovableObject extends DrawableObject {
       return this.y < 180;
     }
   }
+  bounce() {
+    if (this.canBounce) {
+      this.speedY = +30;
+      this.canBounce = false;
+      setTimeout(() => {
+        this.canBounce = true;
+      }, 300);
+    }
+  }
 
   // character.isColliding(chicken);
   isColliding(mo) {
     return (
-      this.x + this.width > mo.x && this.x < mo.x + mo.width && this.y + this.height > mo.y && this.y < mo.y + mo.height
+      this.x + this.width > mo.x && this.x < mo.x + mo.width && this.y < mo.y + mo.height && this.y + this.height > mo.y
     );
   }
+
   isCollidingFromAbove(mo) {
-    const characterBottom = this.y + this.height;
-    const previousBottom = this.y + this.height - this.speedY;
-    const enemyTop = mo.y;
-    // const enemyBottom = mo.y + mo.height;
-    const characterRight = this.x + this.width;
-    const characterLeft = this.x;
-
-    const horizontalOverlap = characterRight > mo.x && characterLeft < mo.x + mo.width;
-
-    return (
-      this.speedY > 0 && // falling
-      previousBottom <= enemyTop && // character was above enemy
-      characterBottom >= enemyTop && // now touching or passed into enemy
-      horizontalOverlap // x-axis overlap must also happen
-    );
+    let verticalCollision = this.y + this.height >= mo.y && this.y + this.height <= mo.y + mo.height;
+    let horizontalCollision = this.x + this.width > mo.x && this.x < mo.x + mo.width;
+    return verticalCollision && horizontalCollision;
   }
 
   isCollidingWithItem(mo) {

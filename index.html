@@ -73,6 +73,18 @@
 
         <img class="icons" onclick="goFullScreen()" src="./img/icons/expand-solid.svg" alt="fullscreen mode on-off" />
       </div>
+      <div class="fail-modal hidden" id="fail-modal">
+        <div class="lost-replay" onclick="restartGame()">
+          <p>Restart Game</p>
+          <img class="restart-game" src="./img/icons/replay.png" alt="restart game" />
+        </div>
+      </div>
+      <div class="win-modal hidden" id="win-modal">
+        <div class="win-replay" onclick="restartGame()">
+          <p>Restart Game</p>
+          <img class="restart-game" src="./img/icons/replay.png" alt="restart game" />
+        </div>
+      </div>
     </div>
 
     <script src="classes/drawable-object.class.js"></script>
