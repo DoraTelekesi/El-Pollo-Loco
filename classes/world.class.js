@@ -7,16 +7,29 @@ class World {
   keyboard;
   camera_x = 0;
   throwableObject = [];
+  movableObjects = [];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
     this.keyboard = keyboard;
+    this.level = level1;
     this.draw();
     this.setWorld();
     this.run();
-    this.endboss = new Endboss();
-    this.endboss.world = this;
+    this.endboss = new Endboss(this);
+    this.level.enemies.push(this.endboss);
+
+    this.movableObjects = [
+      this.character,
+      ...this.level.enemies,
+      ...this.level.clouds,
+      ...this.level.collectibleObjects,
+      ...this.level.statusBarEndboss,
+      ...this.throwableObject,
+    ];
+
+    // Example in your World or Level class
   }
   amountBottle = 0;
   amountCoin = 0;
@@ -25,7 +38,6 @@ class World {
   setWorld() {
     this.character.world = this;
   }
-
 
   run() {
     setInterval(() => {
@@ -90,7 +102,10 @@ class World {
         enemy.hit();
         this.character.bounce();
         AUDIO_SPLAT.play();
-        this.removeEnemy(enemy);
+        this.level.statusBarEndboss[0].setPercentage((enemy.energy * 100) / 20);
+        if (enemy instanceof Chicken) {
+          this.removeEnemy(enemy);
+        }
       }
     });
   }

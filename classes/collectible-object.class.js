@@ -44,7 +44,7 @@ class CollectibleObject extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       let images;
       if (this.type === "bottles") {
         images = this.IMAGES_BOTTLE;

@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let fullscreen = false;
 
 let AUDIO_BACKGROUND = new Audio("./audio/mexican-music.mp3");
 let AUDIO_JUMP = new Audio("./audio/jump.mp3");
@@ -16,14 +17,16 @@ let AUDIO_RUN = new Audio("./audio/run.mp3");
 let AUDIO_BOSS = new Audio("./audio/chicken-noise.mp3");
 let AUDIO_WIN = new Audio("./audio/win.mp3");
 AUDIO_BACKGROUND.loop = true;
+AUDIO_BACKGROUND.volume = 0.1;
 
 function startGame() {
+  initLevel();
   document.getElementById("opening-modal").classList.add("dp-none");
   document.getElementById("overlay").classList.add("hidden");
   document.getElementById("canvas-icons").classList.remove("hidden");
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
-  AUDIO_BACKGROUND.play();
+  // AUDIO_BACKGROUND.play();
 }
 
 function restartGame() {
@@ -36,12 +39,47 @@ function init() {
 }
 
 function goFullScreen() {
-  canvas = document.getElementById("canvas");
-  if (canvas.requestFullScreen) canvas.requestFullScreen();
-  else if (canvas.webkitRequestFullScreen) canvas.webkitRequestFullScreen();
-  else if (canvas.mozRequestFullScreen) canvas.mozRequestFullScreen();
+  let canvasContainer = document.getElementById("canvas-container");
+  if (fullscreen == false) {
+    enterFullScreen(canvasContainer);
+    fullscreen = true;
+    document.getElementById("fullscreen").src = "img/icons/compress-solid.svg";
+  } else if (fullscreen == true) {
+    exitfullscreen();
+    fullscreen = false;
+    document.getElementById("fullscreen").src = "img/icons/expand-solid.svg";
+  }
 }
 
+// Enter fullscreen
+function enterFullScreen(element) {
+  if (element.RequestFullScreen) {
+    element.RequestFullScreen();
+  } else if (element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else {
+    alert("This browser doesn't supporter fullscreen");
+  }
+}
+
+// Exit fullscreen
+function exitfullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else {
+    alert("Exit fullscreen doesn't work");
+  }
+}
 window.addEventListener("keydown", (e) => {
   if (e.keyCode == 39) {
     keyboard.RIGHT = true;

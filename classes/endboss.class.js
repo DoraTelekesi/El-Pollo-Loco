@@ -3,6 +3,8 @@ class Endboss extends MovableObject {
   width = 300;
   y = -35;
   energy = 20;
+  world;
+  gameWon = false;
 
   IMAGES_WALKING = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -39,8 +41,9 @@ class Endboss extends MovableObject {
     "img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
 
-  constructor() {
+  constructor(world) {
     super().loadImage(this.IMAGES_WALKING[0]);
+    this.world = world;
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
@@ -50,11 +53,13 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
         if (!this.gameWon) {
           this.gameWon = true;
+          console.log(this.world.movableObjects)
+          this.world.movableObjects.forEach((obj) => obj.stopInterval());
           setTimeout(() => {
             document.getElementById("win-modal").classList.remove("hidden");
             document.getElementById("overlay").classList.remove("hidden");
@@ -68,13 +73,13 @@ class Endboss extends MovableObject {
       }
     }, 160);
 
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       if (!this.isHurt() && !this.isDead()) {
         this.playAnimation(this.IMAGES_WALKING);
         this.moveLeft();
       }
     }, 200);
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       this.moveLeft();
     }, 1000 / 25);
   }

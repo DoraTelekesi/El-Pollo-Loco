@@ -1,15 +1,35 @@
+html,
 body {
-  max-height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  /* width: 100vw; */
+  height: 100vh;
+  height: 100%;
+  overflow-x: hidden;
+  background-image: url("./img/5_background/cactus.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: "Rye", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url("./img/5_background/cactus.jpg");
-  background-size: cover;
-  font-family: "Rye", sans-serif;
 }
+
 canvas {
   background-color: black;
   position: relative;
+  display: block;
 }
 
 @font-face {
@@ -20,9 +40,36 @@ canvas {
 h1 {
   font-size: 40px;
 }
+
+.canvas-wrapper {
+  position: relative;
+  display: inline-block;
+}
 .canvas-container {
   position: relative; /* Ensure this is the positioned ancestor */
-  display: inline-block; /* Optional: Adjust based on layout */
+  display: inline-block;
+  margin: 0; /* Optional: Adjust based on layout */
+}
+/* Fullscreen canvas container */
+.canvas-container:fullscreen {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: black; /* Optional: background color in fullscreen */
+}
+
+/* For Webkit browsers (Safari, older Chrome) */
+.canvas-container:-webkit-full-screen {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: black;
 }
 
 .opening-modal {
@@ -185,6 +232,19 @@ h1 {
   z-index: 9;
   right: 40px; /* Adjust as needed */
 }
+/* For standard browsers */
+.canvas-container:fullscreen .canvas-icons {
+  /* position: absolute; */
+  top: 88%; /* set your desired position */
+  right: 6%; /* set your desired position */
+}
+
+/* For Webkit browsers */
+.canvas-container:-webkit-full-screen .canvas-icons {
+  /* position: absolute; */
+  top: 88%;
+  right: 6%;
+}
 
 .icons {
   width: 30px;
@@ -240,12 +300,141 @@ h1 {
   background-color: rgba(204, 187, 187, 0.486);
   width: 245px;
   height: 70px;
-  top: 320px;
-  right: 200px;
+  top: 80%;
+  right: 20%;
 }
 
 .lost-replay:hover,
 .win-replay:hover {
   cursor: pointer;
   transform: scale(1.05);
+}
+
+.restart-game {
+  background-color: transparent !important;
+}
+.canvas-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.canvas-wrapper .fail-modal {
+  position: absolute;
+  top: 50%; /* Center vertically over the canvas */
+  left: 50%; /* Center horizontally over the canvas */
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  width: 100%; /* Or 100% if you want it to match the canvas width */
+  height: 100%; /* Or 100% if you want it to match the canvas height */
+  background-image: url("img/You won, you lost/You lost.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 9999;
+  /* other styles as needed */
+}
+.canvas-wrapper .win-modal {
+  position: absolute;
+  top: 50%; /* Center vertically over the canvas */
+  left: 50%; /* Center horizontally over the canvas */
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  width: 100%; /* Or 100% if you want it to match the canvas width */
+  height: 100%; /* Or 100% if you want it to match the canvas height */
+  background-image: url("img/You won, you lost/You won A.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 9999;
+  /* other styles as needed */
+}
+
+@media only screen and (max-width: 730px) {
+  .canvas-wrapper .fail-modal {
+    width: 600px;
+    height: 220px; /* Adjust as needed for your aspect ratio */
+  }
+
+  .lost-replay,
+  .win-replay {
+    font-size: 19px;
+    width: 200px;
+    height: 60px;
+  }
+
+  canvas {
+    width: 100%;
+  }
+  .canvas-icons {
+    position: absolute;
+    top: 90%; /* Adjust as needed */
+    right: 5%; /* Adjust as needed */
+    left: auto;
+    transform: translateY(-50%);
+    z-index: 9;
+  }
+  .opening-modal {
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: brown;
+  }
+  .instructions {
+    width: 80%;
+  }
+  .impressum-modal {
+    width: 80%;
+  }
+  .canvas-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+}
+
+@media only screen and (max-width: 620px) {
+}
+@media only screen and (max-width: 520px) {
+  .canvas-wrapper .fail-modal {
+    width: 400px;
+    height: 220px; /* Adjust as needed for your aspect ratio */
+  }
+  .lost-replay,
+  .win-replay {
+    font-size: 16px;
+    width: 190px;
+    height: 40px;
+  }
+  h1 {
+    display: none;
+  }
+  .instructions,
+  .impressum-modal {
+    font-size: 18px;
+  }
+  .start-btn,
+  .how-to-play-btn,
+  .impressum {
+    font-size: 18px;
+    padding: 6px;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .canvas-wrapper .fail-modal {
+    width: 350px;
+    height: 220px; /* Adjust as needed for your aspect ratio */
+  }
+  .lost-replay,
+  .win-replay {
+    font-size: 16px;
+    width: 190px;
+    height: 40px;
+  }
+}
+
+@media only screen and (max-height: 480px) {
+  canvas {
+    height: 100vh;
+  }
 }

@@ -5,6 +5,13 @@ class Chicken extends MovableObject {
   energy = 5;
   broken = false;
   imageCache = {};
+  speedY = 0;
+  acceleration = 0.08;
+  world;
+  hasToTurn = false;
+  intervalIds = [];
+  i = 1;
+
   IMAGES_WALKING_CHICKEN_1 = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
@@ -28,21 +35,34 @@ class Chicken extends MovableObject {
     this.loadImages(this.IMAGES_WALKING_CHICKEN_2);
     this.loadImages(this.IMAGE_DEAD_CHICKEN_1);
     this.loadImages(this.IMAGE_DEAD_CHICKEN_2);
-
     this.x = 500 + Math.random() * 2800;
     this.speed = 0.5 + Math.random() * 0.5;
+
     this.animate();
+    if (this.type == "chicken-2" && !this.isDead() && !this.isAboveGround()) {
+      this.applyGravity();
+    }
   }
 
   animate() {
-    setInterval(() => {
-      if (!this.isDead()) {
-        this.moveLeft();
-        // console.log(this.y)
+    this.setStoppableInterval(() => {
+      if (!this.otherDirection) {
+        if (this.x > 20) {
+          this.moveLeft();
+        } else {
+          this.otherDirection = true;
+        }
+      } else {
+        if (this.x < 2500) {
+          // Set your right boundary here
+          this.moveRight();
+        } else {
+          this.otherDirection = false;
+        }
       }
     }, 1000 / 60);
 
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       let images;
       if (this.type === "chicken-1") {
         if (this.isDead()) {

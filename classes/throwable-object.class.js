@@ -29,21 +29,17 @@ class ThrowableObject extends MovableObject {
   throw() {
     this.applyGravity();
     this.speedY = 25;
-
-    // Move the bottle horizontally
     const horizontalMovement = setInterval(() => {
       if (!this.broken) {
-        this.x += 5; 
+        this.x += 5;
       } else {
-        clearInterval(horizontalMovement); 
+        clearInterval(horizontalMovement);
       }
     }, 25);
-
 
     setInterval(() => {
       if (this.broken) {
         this.playAnimation(this.SPLASHING_BOTTLES);
-        
       } else {
         this.playAnimation(this.ROTATING_BOTTLES);
       }

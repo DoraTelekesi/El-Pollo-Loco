@@ -91,7 +91,7 @@ class Character extends MovableObject {
   }
 
   navigateCharacter() {
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight();
         this.otherDirection = false;
@@ -110,7 +110,7 @@ class Character extends MovableObject {
 
   animate() {
     this.navigateCharacter();
-    setInterval(() => {
+    this.setStoppableInterval(() => {
       this.handleStandingReset();
       if (this.isHurt()) return this.handleHurt();
       if (this.isDead() && !this.gameFailed) return this.handleDeath();
@@ -123,11 +123,15 @@ class Character extends MovableObject {
   handleDeath() {
     this.gameFailed = true;
     this.playAnimation(this.IMAGES_DEAD);
+
+    // Stop all movable objects
+    console.log(this.world.movableObjects);
+    this.world.movableObjects.forEach((obj) => obj.stopInterval());
     setTimeout(() => {
       document.getElementById("fail-modal").classList.remove("hidden");
       document.getElementById("overlay").classList.remove("hidden");
       AUDIO_BACKGROUND.pause();
-      AUDIO_FAIL.play();
+      // AUDIO_FAIL.play();
     }, 50);
   }
 
@@ -137,11 +141,11 @@ class Character extends MovableObject {
   }
   handleWalk() {
     this.playAnimation(this.IMAGES_WALKING);
-    AUDIO_RUN.play();
+    // AUDIO_RUN.play();
   }
   handleHurt() {
     this.playAnimation(this.IMAGES_HURT);
-    AUDIO_HURT.play();
+    // AUDIO_HURT.play();
   }
 
   handleStanding() {
@@ -151,7 +155,7 @@ class Character extends MovableObject {
         this.standingTimer = setTimeout(() => {
           this.playAnimation(this.IMAGES_LONG_STANDING);
           if (!this.world.gameWon) {
-            AUDIO_SNORE.play();
+            // AUDIO_SNORE.play();
           }
           this.isLongStanding = true;
         }, 3000);

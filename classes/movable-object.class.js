@@ -6,9 +6,10 @@ class MovableObject extends DrawableObject {
   energy = 100;
   lastHit = 0;
   broken = false;
+  intervalIds = [];
 
   applyGravity() {
-    setInterval(() => {
+    const id = setInterval(() => {
       if (!this.broken) {
         if (this.isAboveGround() || this.speedY > 0) {
           this.y -= this.speedY;
@@ -19,12 +20,15 @@ class MovableObject extends DrawableObject {
         }
       }
     }, 1000 / 25);
+    this.intervalIds.push(id); // Store the interval ID
   }
 
   isAboveGround() {
     if (this instanceof ThrowableObject) {
       //Throwable object should always fall
       return true;
+    } else if (this instanceof Chicken) {
+      return this.y < 350;
     } else {
       return this.y < 180;
     }
@@ -49,7 +53,8 @@ class MovableObject extends DrawableObject {
   isCollidingFromAbove(mo) {
     let verticalCollision = this.y + this.height >= mo.y && this.y + this.height <= mo.y + mo.height;
     let horizontalCollision = this.x + this.width > mo.x && this.x < mo.x + mo.width;
-    return verticalCollision && horizontalCollision;
+    // Only true if moving downwards (falling)
+    return verticalCollision && horizontalCollision && this.speedY < 0;
   }
 
   isCollidingWithItem(mo) {
@@ -105,5 +110,15 @@ class MovableObject extends DrawableObject {
   }
   jump() {
     this.speedY = 30;
+  }
+
+  stopInterval() {
+    this.intervalIds.forEach(clearInterval);
+    this.intervalIds = [];
+  }
+
+  setStoppableInterval(fn, time) {
+    const id = setInterval(fn, time);
+    this.intervalIds.push(id); // Store the interval ID
   }
 }
