@@ -351,7 +351,113 @@ h1 {
 .panel {
   display: none;
 }
+@media only screen and (max-height: 770px) and (max-width: 1050px) {
+  /* For standard browsers */
+  .canvas-container:fullscreen .canvas-icons {
+    /* position: absolute; */
+    top: 10%; /* set your desired position */
+    right: 5%; /* set your desired position */
+  }
 
+  /* For Webkit browsers */
+  .canvas-container:-webkit-full-screen .canvas-icons {
+    /* position: absolute; */
+    top: 10%;
+    right: 5%;
+  }
+  .panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99999;
+    top: 85%;
+    width: 100%;
+  }
+
+  .panel-wrapper {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .btn-left-resp,
+  .btn-right-resp,
+  .btn-jump-resp,
+  .btn-throw-resp {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 7px;
+    background-color: rgba(194, 181, 8, 0.808);
+    box-shadow: 5px 5px 5px rgb(56, 24, 24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-left-resp:hover,
+  .btn-right-resp:hover,
+  .btn-jump-resp:hover,
+  .btn-throw-resp:hover {
+    transform: scale(0.9);
+    cursor: pointer;
+  }
+
+  .btn-resp {
+    width: 35px;
+    height: 35px;
+  }
+
+  .btn-left-resp-img {
+    transform: rotate(180deg);
+  }
+  .btn-jump-resp-img {
+    transform: rotate(270deg);
+  }
+
+  .canvas-wrapper .fail-modal {
+    width: 600px;
+    height: 220px; /* Adjust as needed for your aspect ratio */
+  }
+
+  .lost-replay,
+  .win-replay {
+    font-size: 19px;
+    width: 200px;
+    height: 60px;
+  }
+
+  canvas {
+    width: 100%;
+  }
+  .canvas-icons {
+    position: absolute;
+    top: 10%; /* Adjust as needed */
+    right: 5%; /* Adjust as needed */
+    left: auto;
+    transform: translateY(-50%);
+    z-index: 9;
+  }
+  .opening-modal {
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-color: brown;
+  }
+  .instructions {
+    width: 80%;
+  }
+  .impressum-modal {
+    width: 80%;
+  }
+  .canvas-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+}
 @media only screen and (max-width: 730px) {
   .panel {
     position: absolute;
@@ -401,7 +507,7 @@ h1 {
   .btn-left-resp-img {
     transform: rotate(180deg);
   }
-  .btn-jump-resp-img{
+  .btn-jump-resp-img {
     transform: rotate(270deg);
   }
 
@@ -448,7 +554,7 @@ h1 {
 }
 
 @media only screen and (max-width: 620px) {
-    .btn-left-resp,
+  .btn-left-resp,
   .btn-right-resp,
   .btn-jump-resp,
   .btn-throw-resp {
@@ -499,8 +605,8 @@ h1 {
     padding: 6px;
   }
 }
-@media only screen and (max-width:440px){
-    .btn-left-resp,
+@media only screen and (max-width: 440px) {
+  .btn-left-resp,
   .btn-right-resp,
   .btn-jump-resp,
   .btn-throw-resp {
@@ -513,7 +619,7 @@ h1 {
   }
 }
 @media only screen and (max-width: 400px) {
-      .btn-left-resp,
+  .btn-left-resp,
   .btn-right-resp,
   .btn-jump-resp,
   .btn-throw-resp {
@@ -536,6 +642,14 @@ h1 {
   }
 }
 
+@media only screen and (max-height: 780px) {
+  h1 {
+    display: none;
+  }
+  /* canvas {
+    height: 100vh;
+  } */
+}
 @media only screen and (max-height: 480px) {
   canvas {
     height: 100vh;

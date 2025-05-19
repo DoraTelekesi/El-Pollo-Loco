@@ -125,7 +125,7 @@ class Character extends MovableObject {
     this.playAnimation(this.IMAGES_DEAD);
 
     // Stop all movable objects
-    console.log(this.world.movableObjects);
+
     this.world.movableObjects.forEach((obj) => obj.stopInterval());
     setTimeout(() => {
       document.getElementById("fail-modal").classList.remove("hidden");
