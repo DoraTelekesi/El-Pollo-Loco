@@ -26,7 +26,7 @@ function startGame() {
   document.getElementById("canvas-icons").classList.remove("hidden");
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
-  // AUDIO_BACKGROUND.play();
+  AUDIO_BACKGROUND.play();
 }
 
 function restartGame() {

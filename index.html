@@ -86,20 +86,38 @@
               alt="fullscreen mode on-off"
             />
           </div>
-                  <div class="fail-modal hidden" id="fail-modal">
-          <div class="lost-replay" onclick="restartGame()">
-            <p>Restart Game</p>
-            <img class="restart-game" src="./img/icons/replay.png" alt="restart game" />
+          <div class="fail-modal hidden" id="fail-modal">
+            <div class="lost-replay" onclick="restartGame()">
+              <p>Restart Game</p>
+              <img class="restart-game" src="./img/icons/replay.png" alt="restart game" />
+            </div>
+          </div>
+          <div class="win-modal hidden" id="win-modal">
+            <div class="win-replay" onclick="restartGame()">
+              <p>Restart Game</p>
+              <img class="restart-game" src="./img/icons/replay.png" alt="restart game" />
+            </div>
           </div>
         </div>
-        <div class="win-modal hidden" id="win-modal">
-          <div class="win-replay" onclick="restartGame()">
-            <p>Restart Game</p>
-            <img class="restart-game" src="./img/icons/replay.png" alt="restart game" />
+        <div class="panel">
+          <div class="panel-wrapper">
+            <div class="btn-left-resp" id="btn-left-resp">
+              <img class="btn-resp btn-left-resp-img" src="./img/icons/play-solid.svg" alt="">
+            </div>
+            <div class="btn-right-resp" id="btn-right-resp">
+              <img class="btn-resp btn-right-resp-img"src="./img/icons/play-solid.svg" alt="">
+            </div>
+          </div>
+          <div class="panel-wrapper">
+             <div class="btn-jump-resp"  id="btn-jump-resp">
+              <img class="btn-resp btn-jump-resp-img"src="./img/icons/play-solid.svg" alt="">
+            </div>
+            <div class="btn-throw-resp"  id="btn-throw-resp">
+              <img class="btn-resp btn-throw-resp-img"src="./img/icons/share-solid.svg" alt="">
+            </div>
           </div>
         </div>
         </div>
-
       </div>
 
       <script src="classes/drawable-object.class.js"></script>

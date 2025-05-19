@@ -58,7 +58,6 @@ class Endboss extends MovableObject {
         this.playAnimation(this.IMAGES_DEAD);
         if (!this.gameWon) {
           this.gameWon = true;
-          console.log(this.world.movableObjects)
           this.world.movableObjects.forEach((obj) => obj.stopInterval());
           setTimeout(() => {
             document.getElementById("win-modal").classList.remove("hidden");

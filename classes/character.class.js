@@ -131,7 +131,7 @@ class Character extends MovableObject {
       document.getElementById("fail-modal").classList.remove("hidden");
       document.getElementById("overlay").classList.remove("hidden");
       AUDIO_BACKGROUND.pause();
-      // AUDIO_FAIL.play();
+      AUDIO_FAIL.play();
     }, 50);
   }
 
@@ -141,11 +141,12 @@ class Character extends MovableObject {
   }
   handleWalk() {
     this.playAnimation(this.IMAGES_WALKING);
-    // AUDIO_RUN.play();
+    AUDIO_RUN.play();
   }
   handleHurt() {
     this.playAnimation(this.IMAGES_HURT);
-    // AUDIO_HURT.play();
+    AUDIO_HURT.play();
+    AUDIO_RUN.pause();
   }
 
   handleStanding() {
@@ -155,7 +156,7 @@ class Character extends MovableObject {
         this.standingTimer = setTimeout(() => {
           this.playAnimation(this.IMAGES_LONG_STANDING);
           if (!this.world.gameWon) {
-            // AUDIO_SNORE.play();
+            AUDIO_SNORE.play();
           }
           this.isLongStanding = true;
         }, 3000);
